@@ -374,14 +374,14 @@ world.events.beforeChat.subscribe( M_event => {
                     
 
             };
-            if(消息== "挖掘" && 0){
+            if(消息.startsWith("挖掘")){
               
-              
-              let 眼前的工具人 = 获取眼前的假人实体(发起者, 16);
-                  眼前的工具人.breakBlock(new BlockLocation(x,y-1,z))
-                  眼前的工具人. addTag ( 挖掘标识符);
-                  眼前的工具人.removeTag(攻击标识符);
-                  眼前的工具人.removeTag(自动攻击标识符);
+              let 参数=消息.split(" ");
+              let 要用的工具人 = 工具人们[Number(参数[1])];
+                  要用的工具人.breakBlock(new BlockLocation(Number(参数[2]),Number(参数[3]),Number(参数[4])));
+                  要用的工具人.addTag(挖掘标识符);
+                  要用的工具人.removeTag(攻击标识符);
+                  要用的工具人.removeTag(自动攻击标识符);
 
             };
             if(消息== "扭头"){
@@ -410,14 +410,15 @@ world.events.beforeChat.subscribe( M_event => {
              ;
             };
             if(消息== "帮助"){
-              ["###部分功能需要光标对准假人","创建","列表","攻击","自动攻击","销毁","销毁 0" ,"销毁 1","销毁 + 列表标号","扭头","停止","移动","#赠品：输入tps开/tps关","#赞助作者烂活？得了吧。。"].forEach((text)=>发起者.runCommand(`tellraw @s {"rawtext":[{"text":"§e§l-${text}"}]}`))
+              ["###部分功能需要光标对准假人","创建","列表","攻击","自动攻击","销毁","销毁 0" ,"销毁 1","销毁 + 列表标号","挖掘+编号+坐标","扭头","停止","移动","#赠品：输入tps开/tps关","#赞助作者烂活？得了吧。。"].forEach((text)=>发起者.runCommand(`tellraw @s {"rawtext":[{"text":"§e§l-${text}"}]}`))
             
 
             };
       M_event.cancel=ture;
        return;
     } catch (err) {//${err}
-      主世界.runCommand(`me 【假人ERROR】${unescape("\u000a")}* 你触发了一个错误   ${unescape("\u000a")}* 考虑你没对准，歪了`)
+      主世界.runCommand(`me ${err}`);
+      //主世界.runCommand(`me 【假人ERROR】${unescape("\u000a")}* 你触发了一个错误   ${unescape("\u000a")}* 考虑你没对准，歪了`)
     }
    
 })
